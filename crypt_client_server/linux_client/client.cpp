@@ -71,7 +71,7 @@ public:
     }
 
     size_t read(char* buffer, size_t size) {
-        size_t ret;
+        int ret;
         while (size != 0 && (ret = ::read(fd, buffer, size)) != 0) {
             if (-1 == ret) {
                 if (EINTR == errno) {
@@ -83,10 +83,12 @@ public:
             size -= ret;
             buffer += ret;
         }
+
+        return ret > 0 ? ret : 0;
     }
 
     size_t write(const char* buffer, size_t size) {
-        size_t ret, nr;
+        int ret;
         while (size != 0 && (ret = ::write(fd, buffer, size)) != 0) {
             if (-1 == ret) {
                 if (EINTR == errno) {
@@ -98,6 +100,8 @@ public:
             size -= ret;
             buffer += ret;
         }
+
+        return ret > 0 ? ret : 0;
     }
 
     int ioctl(unsigned int cmd, unsigned int arg) {

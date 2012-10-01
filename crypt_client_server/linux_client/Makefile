@@ -1,2 +1,2 @@
 all:
-	g++ client.cpp -o client -static
+	g++ client.cpp -o client -static -Wall
